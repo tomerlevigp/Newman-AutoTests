@@ -1,0 +1,753 @@
+{
+	"info": {
+		"_postman_id": "85e97b54-af2c-49de-8cd6-1dd5215632e3",
+		"name": "CRUD Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create-Distribution",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test(\"save groupUUID\", function () {\r",
+							"    var req = JSON.parse(pm.request.body.raw);\r",
+							"    pm.environment.set(\"groupUUID\", req.groupUUID);\r",
+							"}\r",
+							"\r",
+							"\r",
+							")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",   \r\n\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"          \r\n        },  \r\n        \"instructions\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },    \r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n          \"addressLine1\":\"ראשון לציון\"                          \r\n                                  \r\n        },\r\n        \"instructions\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\":2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": false,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"groupUUID\":\"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n    \r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n     \"date\": \"{{timestamp}}\",\r\n        \"groupUUID\":\"{{groupUUID}}\",\r\n\r\n\r\n     \"pickUpTimeRange\":\"10:00-11:00\"        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/groups/trigger",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"groups",
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries?id={{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create SHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"הכשרת היישוב 23 ראשון לציון\"\r\n          \r\n        },  \r\n        \"note\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n        \r\n    },    \r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n          \"addressLine1\":\"נח מוזס 1 ראשון לציון\"                           \r\n                                  \r\n        },\r\n        \"note\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": true,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"timeRange\": \"14:00-18:00\",\r\n    \r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/sdd/deliveries",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"sdd",
+						"deliveries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries?id={{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locate branch - SHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dropAddress\": {\r\n           \"addressLine1\": \"Ramat Gan\",\r\n        \"city\": \"Ramat Gan\"\r\n    \r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/branches/locate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"branches",
+						"locate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quote-SHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"\r\n          \r\n        },  \r\n        \"contactName\": \"012\",\r\n        \"contactPhoneNumber\": \"0522216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"נח מוזס 1 ראשון לציון\"\r\n        },\r\n        \"contactName\": \"012\",\r\n        \"contactPhoneNumber\": \"0522216199\"\r\n    },\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/sdd/deliveries/quote",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"sdd",
+						"deliveries",
+						"quote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReturnableDist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"\r\n          \r\n        },\r\n        \"instructions\": \"טסט טסט טסט\",\r\n        \"contactName\": \"test\",\r\n        \"contactPhoneNumber\": \"0522216199\"\r\n    },\r\n      \"returnPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"הכשרת היישוב 23 ראשון לציון\"\r\n          \r\n        },\r\n        \"instructions\": \"טסט טסט טסט\",\r\n        \"contactName\": \"test\",\r\n        \"contactPhoneNumber\": \"0522216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"נח מוזס 6 ראשון לציון\"\r\n                    \r\n        },\r\n        \"instructions\": \"טסט טסט טסט\",\r\n        \"contactName\": \"test\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 2\r\n    },\r\n    \"date\": \"2020-12-28\",\r\n    \"isReturnable\": true,\r\n\r\n    \"notes\": \"test\",\r\n        \"groupUUID\":\"34523423\",\r\n\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n     \"date\": \"{{timestamp}}\",\r\n        \"groupUUID\":\"{{groupUUID}}\",\r\n\r\n\r\n     \"pickUpTimeRange\":\"15:00-16:00\"        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/groups/trigger",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"groups",
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

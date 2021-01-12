@@ -1,0 +1,833 @@
+{
+	"info": {
+		"_postman_id": "c6f3080d-5ffd-4e46-a8dc-63ff2ff47e68",
+		"name": "PublicApi - Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateSdd",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+02:00\",\r\n  \"is_same_day\": true,  \r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"18:00 - 20:00\",\r\n    \"dropoff_time_range\": \"18:00 - 20:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"signature\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 ססססססססססס\",\r\n      \"location\": {\r\n        \"address\":\"חמדיה 1 ראשון לציון\",\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 גגגגג גגגגגגג גגג\",\r\n      \"location\": {\r\n           \"address\": \"שדה נחום 17 ראשון לציון\"\r\n \r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\":\"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Algo Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://stg.getpackage-dev.com/v1/deliveries/groups/0/{{timestamp}}T12:00:00.000Z/trigger",
+					"protocol": "https",
+					"host": [
+						"stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"groups",
+						"0",
+						"{{timestamp}}T12:00:00.000Z",
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeliveryByID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/{{delivery_id}}/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						"{{delivery_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateSdd with client_branch_id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+03:00\",\r\n  \"is_same_day\": true,\r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"11:00 - 13:00\",\r\n    \"dropoff_time_range\": \"11:00 - 13:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"signature\",\r\n  \"item\": { \r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"client_branch_id\":\"169\",   \r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\": \"ראשון לציון\",       \r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    }\r\n\r\n      ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelDelivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+							"});\r",
+							"console.log(pm.response)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/{{delivery_id}}/cancel/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						"{{delivery_id}}",
+						"cancel",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeliveryByID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/{{delivery_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						"{{delivery_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateSdd_Client_Company_name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+03:00\",\r\n  \"is_same_day\": true,\r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"18:00 - 20:00\",\r\n    \"dropoff_time_range\": \"18:00 - 20:00\",\r\n    \"client_company_name\":\"אמזון\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"signature\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\":\"חמדיה 1 ראשון לציון\"\r\n\r\n\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\": \"שדה נחום 22 ראשון לציון\",\r\n\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quote branch id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"2020-12-31 18:00+03:00\",\r\n  \"is_same_day\": true,\r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"14:00 - 18:00\",\r\n    \"dropoff_time_range\": \"14:00 - 18:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"signature\",\r\n  \"item\": { \r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"client_branch_id\":\"169\",   \r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\": \"נח מוזס 1 ראשון לציון\",\r\n\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/quote/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						"quote",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quote",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"2020-12-31 18:00+02:00\",\r\n  \"is_same_day\": true,  \r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"14:00 - 18:00\",\r\n    \"dropoff_time_range\": \"14:00 - 18:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"photo\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"note\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 ססססססססססס\",\r\n      \"location\": {\r\n        \"address\":\"נורדאו 9 תל אביב\",\r\n\r\n\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"note\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 גגגגג גגגגגגג גגג\",\r\n      \"location\": {\r\n           \"address\": \"נורדאו 80 תל אביב\"\r\n \r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\":\"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/quote/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						"quote",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returnable",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+03:00\",\r\n  \"is_same_day\": true,\r\n  \"is_urgent\": false,\r\n    \"pickup_time_range\": \"14:00 - 18:00\",\r\n    \"dropoff_time_range\": \"14:00 - 18:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"photo\",\r\n      \"returnable\": \"true\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n     \"client_branch_id\":\"169\",  \r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"חמדיה 1 ראשון לציון\",\r\n      \"location\": {\r\n        \"address\":\"שדה נחום 17 ראשון לציון\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"return\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n          \"client_branch_id\":\"169\",  \r\n\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePremium",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+03:00\",\r\n  \"is_same_day\": false,\r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"16:00 - 18:00\",\r\n    \"dropoff_time_range\": \"16:00 - 18:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"photo\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\":\"הכשרת היישוב 23 ראשון לציון\"\r\n\r\n\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"052-2216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\": \"נח מוזס 1 ראשון לציון\",\r\n\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"+972522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenApi",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://open-api.getpackage.com/api/v1/timeframes/?address=אעבלין&format=json&open_key=3698a9a4-00bb-4751-959c-9e7c3bf8ac3c&all_branches=1",
+					"protocol": "https",
+					"host": [
+						"open-api",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"timeframes",
+						""
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "אעבלין"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "open_key",
+							"value": "3698a9a4-00bb-4751-959c-9e7c3bf8ac3c"
+						},
+						{
+							"key": "all_branches",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
