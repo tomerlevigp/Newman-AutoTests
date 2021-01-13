@@ -794,7 +794,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://open-api.getpackage.com/api/v1/timeframes/?address=אעבלין&format=json&open_key=3698a9a4-00bb-4751-959c-9e7c3bf8ac3c&all_branches=1",
+					"raw": "https://stg-open-api.getpackage.com/api/v1/timeframes/?address=אעבלין&format=json&open_key=3698a9a4-00bb-4751-959c-9e7c3bf8ac3c&all_branches=1",
 					"protocol": "https",
 					"host": [
 						"open-api",
