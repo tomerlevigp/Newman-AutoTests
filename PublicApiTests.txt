@@ -1,1 +1,0 @@
-newman run PublicApi-Tests.postman_collection.json -e Tomer-0523699996-stg.postman_environment.json
