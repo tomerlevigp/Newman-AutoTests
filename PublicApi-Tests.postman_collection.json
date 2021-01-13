@@ -64,9 +64,12 @@
 					"raw": "{\r\n  \"pickup_date\": \"{{timestamp}} 18:00+02:00\",\r\n  \"is_same_day\": true,  \r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"18:00 - 20:00\",\r\n    \"dropoff_time_range\": \"18:00 - 20:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"signature\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 ססססססססססס\",\r\n      \"location\": {\r\n        \"address\":\"חמדיה 1 ראשון לציון\",\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"0522216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"מספר הזמנה: 4938220, שם המשלם: רועי גולדפיינר, ת.ז.: 200555381, אשראי: 4367, טל: 0524891695 גגגגג גגגגגגג גגג\",\r\n      \"location\": {\r\n           \"address\": \"שדה נחום 17 ראשון לציון\"\r\n \r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\":\"0522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
 				},
 				"url": {
-					"raw": "{{url}}/api/v1.2/deliveries/",
+					"raw": "https://stg-api.getpackage.com/api/v1.2/deliveries/",
+					"protocol": "https",
 					"host": [
-						"{{url}}"
+						"stg-api",
+						"getpackage",
+						"com"
 					],
 					"path": [
 						"api",
@@ -749,7 +752,7 @@
 			"response": []
 		},
 		{
-			"name": "OpenApi",
+			"name": "OpenApi Pelephone",
 			"event": [
 				{
 					"listen": "test",
@@ -794,10 +797,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://stg-open-api.getpackage.com/api/v1/timeframes/?address=אעבלין&format=json&open_key=3698a9a4-00bb-4751-959c-9e7c3bf8ac3c&all_branches=1",
+					"raw": "https://stg-open-api.getpackage.com/api/v1/timeframes/?address=ראשון לציון&format=json&open_key=3698a9a4-00bb-4751-959c-9e7c3bf8ac3c&all_branches=1",
 					"protocol": "https",
 					"host": [
-						"open-api",
+						"stg-open-api",
 						"getpackage",
 						"com"
 					],
@@ -810,7 +813,7 @@
 					"query": [
 						{
 							"key": "address",
-							"value": "אעבלין"
+							"value": "ראשון לציון"
 						},
 						{
 							"key": "format",
@@ -823,6 +826,83 @@
 						{
 							"key": "all_branches",
 							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenApi Cellcom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://stg-open-api.getpackage.com/api/v1/timeframes/?address=נתניה&open_key=d8503fb2-c804-43f0-969b-09421e77ef35&format=json",
+					"protocol": "https",
+					"host": [
+						"stg-open-api",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"timeframes",
+						""
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "נתניה"
+						},
+						{
+							"key": "open_key",
+							"value": "d8503fb2-c804-43f0-969b-09421e77ef35"
+						},
+						{
+							"key": "format",
+							"value": "json"
 						}
 					]
 				}
