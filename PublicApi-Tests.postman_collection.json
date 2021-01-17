@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c6f3080d-5ffd-4e46-a8dc-63ff2ff47e68",
+		"_postman_id": "397dd043-2fc9-4de9-892a-b1985a99ba72",
 		"name": "PublicApi - Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -106,10 +106,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://stg.getpackage-dev.com/v1/deliveries/groups/0/{{timestamp}}T12:00:00.000Z/trigger",
+					"raw": "https://api-stg.getpackage-dev.com/v1/deliveries/groups/0/{{timestamp}}T12:00:00.000Z/trigger",
 					"protocol": "https",
 					"host": [
-						"stg",
+						"api-stg",
 						"getpackage-dev",
 						"com"
 					],
