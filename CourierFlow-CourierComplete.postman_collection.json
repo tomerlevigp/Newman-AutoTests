@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "acb6d15b-a915-4a87-94bd-4c890a644424",
+		"name": "Courier Flow - Courier Complete Premium & Route",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreatePremium",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickup_date\": \"2021-01-25 18:00+03:00\",\r\n  \"is_same_day\": false,\r\n  \"is_urgent\": false, \r\n    \"pickup_time_range\": \"16:00 - 18:00\",\r\n    \"dropoff_time_range\": \"16:00 - 18:00\",\r\n   \"dummy_delivery\":false,\r\n  \"confirmation\": \"photo\",\r\n  \"item\": {\r\n    \"delivery_type\": \"small\",\r\n    \"package_id\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\"\r\n  },\r\n  \"stop_points\": [\r\n    {\r\n      \"type\": \"pick_up\",\r\n      \"required_secure\": false,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\":\"הכשרת היישוב 23 ראשון לציון\"\r\n\r\n\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"052-2216199\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"drop_off\",\r\n      \"required_secure\": true,\r\n      \"instruction\": \"נא להתקשר בהגעה\",\r\n      \"location\": {\r\n        \"address\": \"נח מוזס 1 ראשון לציון\",\r\n\r\n        \"country\": \"ישראל\"\r\n              },\r\n      \"contact\": {\r\n        \"full_name\": \"תומר לוי\",\r\n        \"phone_number\": \"+972522216199\"\r\n      }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1.2/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1.2",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AssignCourier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"courier\":2955}"
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/v1/admin/delivery/{{delivery_id}}/assign-courier/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"delivery",
+						"{{delivery_id}}",
+						"assign-courier",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompleteDelivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"delivery_id\": {{delivery_id}},\r\n\t\"status\": 7}"
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/sdd/api/v1/delivery/update-status/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"sdd",
+						"api",
+						"v1",
+						"delivery",
+						"update-status",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create-Distribution",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test(\"save groupUUID\", function () {\r",
+							"    var req = JSON.parse(pm.request.body.raw);\r",
+							"    pm.environment.set(\"groupUUID\", req.groupUUID);\r",
+							"}\r",
+							"\r",
+							"\r",
+							")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",   \r\n\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"          \r\n        },  \r\n        \"instructions\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },    \r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n          \"addressLine1\":\"ראשון לציון\"                          \r\n                                  \r\n        },\r\n        \"instructions\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\":2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": false,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"groupUUID\":\"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n    \r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/deliveries/businessCompanies/deliveries/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n     \"date\": \"{{timestamp}}\",\r\n        \"groupUUID\":\"{{groupUUID}}\",\r\n\r\n\r\n     \"pickUpTimeRange\":\"10:00-11:00\"        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/deliveries/businessCompanies/groups/trigger",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"groups",
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getroutes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.data.routes.items);\r",
+							"    pm.environment.set(\"RouteId\", json.data.routes.items[json.data.routes.items.length - 1].id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\":\"query {  routes(limit:500,status:[0],date:{start:\\\"{{timestamp}}\\\"}) {    items{id}  }}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign courier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"UpdateRouteAssignment\",\r\n    \"variables\": {\r\n        \"id\": {{RouteId}},\r\n        \"courierId\": 2955\r\n    },\r\n    \"query\": \"mutation UpdateRouteAssignment($id: Int!, $courierId: Int) {\\n  updateRouteAssignment(id: $id, courierId: $courierId) {\\n    id\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StartedDelivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().data.updateDeliveries[0].id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\":\"mutation {  updateDeliveries(items:[{id:{{id}},status:5}]) {    id  }}\"}"
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompletedDelivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"delivery_id\", pm.response.json().delivery_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\":\"mutation {  updateDeliveries(items:[{id:{{id}},status:6}]) {    id  }}\"}  "
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
