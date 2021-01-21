@@ -93,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 0,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 0,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -207,7 +207,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 1,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 1,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -321,7 +321,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 2,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 2,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
