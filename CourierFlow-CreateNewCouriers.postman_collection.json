@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "3d8b391e-755a-467b-859a-3ff20a1bcfa0",
+		"name": "Courier Flow -Create New Couriers (3 Tax Statuses)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new undefined courier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"CourierId\", pm.response.json().courier.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"function getRandomInt(min, max) {\r",
+							"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+							"}\r",
+							"function getInc(num, i) {\r",
+							"    var inc = Number(num)*((i%2)+1);\r",
+							"    return (inc>9)?inc-=9:inc;\r",
+							"}\r",
+							"function getIid() {\r",
+							"    var iid=\"\", num, counter=0;\r",
+							"    for(var i=0;i<8;i++) {\r",
+							"        num=getRandomInt((i<2)?2:0,(i<2)?3:9);\r",
+							"        iid+=num.toString();\r",
+							"        counter+=getInc(num,i);\r",
+							"    }\r",
+							"    return iid+(10-(counter%10)).toString();\r",
+							"}\r",
+							"function checkIid(s) {\r",
+							"    var sID = String(s);\r",
+							"    if ((sID.length != 9) || (isNaN(sID))) return false;\r",
+							"    var counter = 0, incNum;\r",
+							"    for (var i = 0; i < 9; i++) {\r",
+							"        incNum = Number(sID.charAt(i));\r",
+							"        incNum *= (i % 2) + 1;\r",
+							"        if (incNum > 9) incNum -= 9;\r",
+							"        counter += incNum;\r",
+							"    }\r",
+							"    return (counter % 10 === 0);\r",
+							"}\r",
+							"const generate = function() {\r",
+							"    let iid = null;\r",
+							"    let checkStatus = null;\r",
+							"    while (!checkStatus) {\r",
+							"        iid = getIid();\r",
+							"        checkStatus = checkIid(iid);\r",
+							"    }\r",
+							"    return iid;\r",
+							"};\r",
+							"const nationalid = generate();\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"NationalId\",nationalid);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"type": "text",
+						"value": "csrftoken=PFkyiEELyDjvkskvqCpnxna7gLro7e4bl6DQyE5L7Zi1EiOx4zvUwz34OQHUn1r7"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 0,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/v1/courier/create/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new pay tax + vat courier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"CourierId\", pm.response.json().courier.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"function getRandomInt(min, max) {\r",
+							"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+							"}\r",
+							"function getInc(num, i) {\r",
+							"    var inc = Number(num)*((i%2)+1);\r",
+							"    return (inc>9)?inc-=9:inc;\r",
+							"}\r",
+							"function getIid() {\r",
+							"    var iid=\"\", num, counter=0;\r",
+							"    for(var i=0;i<8;i++) {\r",
+							"        num=getRandomInt((i<2)?2:0,(i<2)?3:9);\r",
+							"        iid+=num.toString();\r",
+							"        counter+=getInc(num,i);\r",
+							"    }\r",
+							"    return iid+(10-(counter%10)).toString();\r",
+							"}\r",
+							"function checkIid(s) {\r",
+							"    var sID = String(s);\r",
+							"    if ((sID.length != 9) || (isNaN(sID))) return false;\r",
+							"    var counter = 0, incNum;\r",
+							"    for (var i = 0; i < 9; i++) {\r",
+							"        incNum = Number(sID.charAt(i));\r",
+							"        incNum *= (i % 2) + 1;\r",
+							"        if (incNum > 9) incNum -= 9;\r",
+							"        counter += incNum;\r",
+							"    }\r",
+							"    return (counter % 10 === 0);\r",
+							"}\r",
+							"const generate = function() {\r",
+							"    let iid = null;\r",
+							"    let checkStatus = null;\r",
+							"    while (!checkStatus) {\r",
+							"        iid = getIid();\r",
+							"        checkStatus = checkIid(iid);\r",
+							"    }\r",
+							"    return iid;\r",
+							"};\r",
+							"const nationalid = generate();\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"NationalId\",nationalid);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"type": "text",
+						"value": "csrftoken=PFkyiEELyDjvkskvqCpnxna7gLro7e4bl6DQyE5L7Zi1EiOx4zvUwz34OQHUn1r7"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 1,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/v1/courier/create/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new pay tax courier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"CourierId\", pm.response.json().courier.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"function getRandomInt(min, max) {\r",
+							"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+							"}\r",
+							"function getInc(num, i) {\r",
+							"    var inc = Number(num)*((i%2)+1);\r",
+							"    return (inc>9)?inc-=9:inc;\r",
+							"}\r",
+							"function getIid() {\r",
+							"    var iid=\"\", num, counter=0;\r",
+							"    for(var i=0;i<8;i++) {\r",
+							"        num=getRandomInt((i<2)?2:0,(i<2)?3:9);\r",
+							"        iid+=num.toString();\r",
+							"        counter+=getInc(num,i);\r",
+							"    }\r",
+							"    return iid+(10-(counter%10)).toString();\r",
+							"}\r",
+							"function checkIid(s) {\r",
+							"    var sID = String(s);\r",
+							"    if ((sID.length != 9) || (isNaN(sID))) return false;\r",
+							"    var counter = 0, incNum;\r",
+							"    for (var i = 0; i < 9; i++) {\r",
+							"        incNum = Number(sID.charAt(i));\r",
+							"        incNum *= (i % 2) + 1;\r",
+							"        if (incNum > 9) incNum -= 9;\r",
+							"        counter += incNum;\r",
+							"    }\r",
+							"    return (counter % 10 === 0);\r",
+							"}\r",
+							"const generate = function() {\r",
+							"    let iid = null;\r",
+							"    let checkStatus = null;\r",
+							"    while (!checkStatus) {\r",
+							"        iid = getIid();\r",
+							"        checkStatus = checkIid(iid);\r",
+							"    }\r",
+							"    return iid;\r",
+							"};\r",
+							"const nationalid = generate();\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"NationalId\",nationalid);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"type": "text",
+						"value": "csrftoken=PFkyiEELyDjvkskvqCpnxna7gLro7e4bl6DQyE5L7Zi1EiOx4zvUwz34OQHUn1r7"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"335740718\",\r\n\t\"phone_number\": \"0{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"335740718\",\r\n\t\"tax_method\": 2,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/v1/courier/create/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"courier",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
