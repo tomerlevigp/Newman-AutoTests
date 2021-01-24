@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "f5d31668-8ff7-44cc-a3a3-769379087e86",
+		"name": "300 Deliveries Script",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Distribution",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							"\r",
+							"\r",
+							"const latitude = parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`);\r",
+							"const longitude = parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`);\r",
+							"pm.environment.set(\"random_latitude\", latitude);\r",
+							"pm.environment.set(\"random_longitude\", longitude);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test(\"save groupUUID\", function () {\r",
+							"    var req = JSON.parse(pm.request.body.raw);\r",
+							"    pm.environment.set(\"groupUUID\", req.groupUUID);\r",
+							"}\r",
+							"\r",
+							"\r",
+							")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",   \r\n\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"\r\n          \r\n        },  \r\n        \"instructions\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },    \r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude}} ,\r\n            \"latitude\": {{random_latitude}}                    \r\n                                  \r\n        },\r\n        \"instructions\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 0\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": false,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n\r\n    \r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/deliveries/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"deliveries",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
