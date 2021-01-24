@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "ba28e467-6dae-450f-87ab-80807217ea14",
+		"name": "Trigger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trigger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n     \"date\": \"{{timestamp}}\",\r\n\r\n\r\n     \"pickUpTimeRange\":\"10:00-11:00\"        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/groups/trigger",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"groups",
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
