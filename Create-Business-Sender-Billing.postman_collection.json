@@ -1,0 +1,1077 @@
+{
+	"info": {
+		"_postman_id": "61c7b002-dace-4e90-9016-e39b3f3f8390",
+		"name": "Create Business Sender Billing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Business Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.business_manager.length - 1].business_company);\r",
+							"    pm.environment.set(\"business_company\", json.business_manager[json.business_manager.length - 1].business_company);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.business_manager.length - 1].company_name);\r",
+							"    pm.environment.set(\"company_name\", json.business_manager[json.business_manager.length - 1].company_name);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.token);\r",
+							"    pm.environment.set(\"token\", json.token);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.owner_of_business_companies[json.owner_of_business_companies.length - 1].business_name);\r",
+							"    pm.environment.set(\"business_name\", json.owner_of_business_companies[json.owner_of_business_companies.length - 1].business_name);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.business_manager.length - 1].email);\r",
+							"    pm.environment.set(\"email\", json.business_manager[json.business_manager.length - 1].email);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.business_manager.length - 1].id);\r",
+							"    pm.environment.set(\"phone_number\", json.business_manager[json.business_manager.length - 1].phone_number);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.owner_of_business_companies[json.owner_of_business_companies.length - 1].id);\r",
+							"    pm.environment.set(\"contact_phone_number\", json.owner_of_business_companies[json.owner_of_business_companies.length - 1].contact_phone_number);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.business_manager.length - 1].contact_name);\r",
+							"    pm.environment.set(\"contact_name\", json.business_manager[json.business_manager.length - 1].contact_name);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.owner_of_business_companies.length - 1].contact_email);\r",
+							"    pm.environment.set(\"contact_email\", json.owner_of_business_companies[json.owner_of_business_companies.length - 1].contact_email);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.business_manager[json.owner_of_business_companies.length - 1].tax_id);\r",
+							"    pm.environment.set(\"tax_id\", json.owner_of_business_companies[json.owner_of_business_companies.length - 1].tax_id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"הכשרת היישוב 23\",\r\n    \"business_domain\": \"0\",\r\n    \"business_name\": \"gptest\",\r\n    \"company_name\": \"{{$randomCompanyName}}\",\r\n    \"contact_email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n    \"contact_name\": \"gptest gptest\",\r\n    \"contact_phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n    \"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n    \"location\": {\r\n        \"lat\": 31.9923631,\r\n        \"lng\": 34.7617912\r\n    },\r\n    \"owner\": {\r\n        \"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n        \"first_name\": \"gptest\",\r\n        \"last_name\": \"gptest\",\r\n        \"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\"\r\n    },\r\n    \"password\": \"303048821Aa\",\r\n    \"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n    \"tax_id\": \"303048821\"\r\n}"
+				},
+				"url": {
+					"raw": "https://stg-python.getpackage.com/api/v1/business/create_front/",
+					"protocol": "https",
+					"host": [
+						"stg-python",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"business",
+						"create_front",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bank transfer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    console.log(json.data.routes.items);\r",
+							"    pm.environment.set(\"business_company\", json.data.routes.items[json.data.routes.items.length - 1].id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"type": "text",
+						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{business_company}},\r\n    \"company_name\": \"{{company_name}}\",\r\n    \"business_name\": \"{{business_name}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"phone_number\": \"{{phone_number}}\",\r\n    \"contact_name\": \"{{contact_name}}\",\r\n    \"contact_phone_number\": \"{{contact_phone_number}}\",\r\n    \"contact_email\": \"{{contact_email}}\",\r\n    \"tax_id\": \"{{tax_id}}\",\r\n    \"send_mobile_notifications\": true,\r\n    \"without_payment_method\": true,\r\n    \"allow_sdd\": true,\r\n    \"auto_charge\": false,\r\n     \"is_distribution\": false\r\n}"
+				},
+				"url": {
+					"raw": "https://stg-web.getpackage.com/api/v1/admin/accounts/business/{{business_company}}/",
+					"protocol": "https",
+					"host": [
+						"stg-web",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"accounts",
+						"business",
+						"{{business_company}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetApikey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    const json = pm.response.json();\r",
+							"    pm.environment.set(\"key\", json.key);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"type": "text",
+						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://stg-web.getpackage.com/api/v1/business/{{business_company}}/apikey/",
+					"protocol": "https",
+					"host": [
+						"stg-web",
+						"getpackage",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"business",
+						"{{business_company}}",
+						"apikey",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create SHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(3, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "APIKEY {{key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"הכשרת היישוב 23 ראשון לציון\"\r\n        },\r\n        \"note\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"נח מוזס 1 ראשון לציון\"\r\n        },\r\n        \"note\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": true,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"timeRange\": \"14:00-18:00\",\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/deliveries/businessCompanies/sdd/deliveries",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"sdd",
+						"deliveries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exclude",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.data.excludeDeliveries.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"excludeDeliveries\",\r\n    \"variables\": {\r\n        \"items\": [\r\n            {{id}}\r\n        ]\r\n    },\r\n    \"query\": \"mutation excludeDeliveries($items: [Int!]!) {\\n  excludeDeliveries(items: $items) {\\n    id\\n    isExcluded\\n    status\\n    basePrice {\\n      amount\\n      currency\\n      __typename\\n    }\\n    payout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    vat\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Points",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							" const json = pm.response.json();\r",
+							"    console.log(json.data.deliveries.items[json.data.deliveries.items.length - 1].dropOffPoint.id)\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"dropOffPointID\", pm.response.json().data.deliveries.items[pm.response.json().data.deliveries.items.length - 1].dropOffPoint.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"pickUpPointID\", pm.response.json().data.deliveries.items[pm.response.json().data.deliveries.items.length - 1].pickUpPoint.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.data.excludeDeliveries.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 9857f44f2193b7d38e1347ba42548ae4bd3edf8e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"Deliveries\",\r\n    \"variables\": {\r\n        \"offset\": 0,\r\n        \"limit\": 20,\r\n        \"date\": {\r\n            \"start\": \"2021-02-01\",\r\n            \"end\": \"2021-02-28\"\r\n        },\r\n        \"isExcluded\": true,\r\n        \"search\": \"{{id}}\",\r\n        \"dropOffTimeRange\": [],\r\n        \"sort\": {\r\n            \"deliveryNumber\": false\r\n        },\r\n        \"status\": [\r\n            0\r\n        ]\r\n    },\r\n    \"query\": \"query Deliveries($limit: Int, $offset: Int, $deliveryNumber: [Int!], $dropOffTimeRange: [TimeRange!], $id: [Int!], $isExcluded: Boolean, $date: DateRangeArgs, $packageId: [Int!], $packageCustomerUniqueId: [String!], $search: String, $sort: DeliveriesSortArgs, $status: [Int!]) {\\n  deliveries(limit: $limit, offset: $offset, deliveryNumber: $deliveryNumber, dropOffTimeRange: $dropOffTimeRange, id: $id, isExcluded: $isExcluded, date: $date, packageId: $packageId, packageCustomerUniqueId: $packageCustomerUniqueId, search: $search, sort: $sort, status: $status) {\\n    items {\\n      id\\n      deliveryNumber\\n      isExcluded\\n      courierId\\n      courier {\\n        id\\n        firstName\\n        lastName\\n        name\\n        taxStatus\\n        user {\\n          id\\n          avatarUrl\\n          firstName\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        vehicle\\n        __typename\\n      }\\n      dropOffPoint {\\n        start\\n        end\\n        address {\\n          addressLine1\\n          country\\n          city\\n          street\\n          number\\n          state\\n          zip\\n          notes\\n          __typename\\n        }\\n        location {\\n          coordinates\\n          __typename\\n        }\\n        id\\n        __typename\\n      }\\n      pickUpPoint {\\n        start\\n        end\\n        address {\\n          addressLine1\\n          addressLine1\\n          country\\n          city\\n          street\\n          number\\n          state\\n          zip\\n          notes\\n          __typename\\n        }\\n        location {\\n          coordinates\\n          __typename\\n        }\\n        id\\n        __typename\\n      }\\n      businessCompany {\\n        businessName\\n        companyName\\n        __typename\\n      }\\n      businessCompanyId\\n      routeId\\n      status\\n      adminNotes {\\n        id\\n        comment\\n        createdAt\\n        type\\n        updatedAt\\n        userId\\n        __typename\\n      }\\n      notes\\n      package {\\n        id\\n        branchBusinessCompanyId\\n        businessCompanyId\\n        conditions\\n        customerUniqueId\\n        sender {\\n          id\\n          user {\\n            id\\n            avatarUrl\\n            firstName\\n            lastName\\n            name\\n            phoneNumber\\n            __typename\\n          }\\n          userId\\n          __typename\\n        }\\n        senderId\\n        size\\n        __typename\\n      }\\n      packageId\\n      serviceType\\n      __typename\\n    }\\n    totalCount\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manual Route",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"  const json = pm.response.json();\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"RouteID\",json.data.createManualRoutes.id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"CreateManualRoutes\",\r\n    \"variables\": {\r\n        \"deliveryIDs\": [\r\n            {{id}}\r\n        ],\r\n        \"pointIDs\": [\r\n            {{dropOffPointID}},\r\n            {{pickUpPointID}}\r\n        ]\r\n    },\r\n    \"query\": \"mutation CreateManualRoutes($deliveryIDs: [Int!]!, $pointIDs: [Int!]!) {\\n  createManualRoutes(deliveryIDs: $deliveryIDs, pointIDs: $pointIDs) {\\n    id\\n    isManual\\n    __typename\\n  }\\n}\\n\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign courier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"UpdateRouteAssignment\",\r\n    \"variables\": {\r\n        \"id\": {{RouteID}},\r\n        \"courierId\": 2955\r\n    },\r\n    \"query\": \"mutation UpdateRouteAssignment($id: Int!, $courierId: Int) {\\n  updateRouteAssignment(id: $id, courierId: $courierId) {\\n    id\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "start delivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"UpdateDeliveries\",\r\n    \"variables\": {\r\n        \"items\": [\r\n            {\r\n                \"id\": {{id}},\r\n                \"status\": 3\r\n            }\r\n        ]\r\n    },\r\n    \"query\": \"mutation UpdateDeliveries($items: [UpdateDeliveryArgs!]!) {\\n  updateDeliveries(items: $items) {\\n    id\\n    adminNotes {\\n      id\\n      comment\\n      createdAt\\n      type\\n      updatedAt\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      __typename\\n    }\\n    assignedAt\\n    branchBusinessCompanyId\\n    businessCompany {\\n      id\\n      avatarUrl\\n      businessName\\n      companyName\\n      contactName\\n      contactPhoneNumber\\n      isTechAct\\n      maxReturnCount\\n      minDeliveriesInGroupCount\\n      polygonId\\n      polygonIds\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      userId\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      __typename\\n    }\\n    businessCompanyId\\n    canceledAt\\n    completedAt\\n    courier {\\n      id\\n      firstName\\n      lastName\\n      name\\n      status\\n      taxStatus\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      vehicle\\n      statistics {\\n        completedCount\\n        __typename\\n      }\\n      __typename\\n    }\\n    courierId\\n    createdAt\\n    distance\\n    dropOffPointId\\n    externalId\\n    groupId\\n    isExcluded\\n    isReturnable\\n    package {\\n      id\\n      barcodeId\\n      branchBusinessCompanyId\\n      businessCompanyId\\n      conditions\\n      customerUniqueId\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      senderId\\n      size\\n      __typename\\n    }\\n    pickUpPointId\\n    pickedUpAt\\n    priority\\n    returnedAt\\n    routeId\\n    returnPointId\\n    startedAt\\n    status\\n    doneAt\\n    deliveryProviderId\\n    deliveryProviderCourierId\\n    originalDropoffDate\\n    isNow\\n    vat\\n    paymentStatus\\n    isPaidToCourier\\n    courierTaxRateId\\n    isSharedLocation\\n    emailNotification\\n    deliveryNumber\\n    insuranceId\\n    realAssignmentDate\\n    realStartDate\\n    realCompletedDate\\n    dateStatusUpdated\\n    paymentMethodId\\n    createdThrough\\n    notes\\n    createdSupportUserId\\n    notifySent\\n    producerId\\n    producerOrderId\\n    clientCompanyName\\n    withdrawId\\n    additionalPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    basePrice {\\n      amount\\n      currency\\n      __typename\\n    }\\n    dropOffPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    payout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    pickUpPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    returnPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Picked Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"UpdateDeliveries\",\r\n    \"variables\": {\r\n        \"items\": [\r\n            {\r\n                \"id\": {{id}},\r\n                \"status\": 5\r\n            }\r\n        ]\r\n    },\r\n    \"query\": \"mutation UpdateDeliveries($items: [UpdateDeliveryArgs!]!) {\\n  updateDeliveries(items: $items) {\\n    id\\n    adminNotes {\\n      id\\n      comment\\n      createdAt\\n      type\\n      updatedAt\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      __typename\\n    }\\n    assignedAt\\n    branchBusinessCompanyId\\n    businessCompany {\\n      id\\n      avatarUrl\\n      businessName\\n      companyName\\n      contactName\\n      contactPhoneNumber\\n      isTechAct\\n      maxReturnCount\\n      minDeliveriesInGroupCount\\n      polygonId\\n      polygonIds\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      userId\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      __typename\\n    }\\n    businessCompanyId\\n    canceledAt\\n    completedAt\\n    courier {\\n      id\\n      firstName\\n      lastName\\n      name\\n      status\\n      taxStatus\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      vehicle\\n      statistics {\\n        completedCount\\n        __typename\\n      }\\n      __typename\\n    }\\n    courierId\\n    createdAt\\n    distance\\n    dropOffPointId\\n    externalId\\n    groupId\\n    isExcluded\\n    isReturnable\\n    package {\\n      id\\n      barcodeId\\n      branchBusinessCompanyId\\n      businessCompanyId\\n      conditions\\n      customerUniqueId\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      senderId\\n      size\\n      __typename\\n    }\\n    pickUpPointId\\n    pickedUpAt\\n    priority\\n    returnedAt\\n    routeId\\n    returnPointId\\n    startedAt\\n    status\\n    doneAt\\n    deliveryProviderId\\n    deliveryProviderCourierId\\n    originalDropoffDate\\n    isNow\\n    vat\\n    paymentStatus\\n    isPaidToCourier\\n    courierTaxRateId\\n    isSharedLocation\\n    emailNotification\\n    deliveryNumber\\n    insuranceId\\n    realAssignmentDate\\n    realStartDate\\n    realCompletedDate\\n    dateStatusUpdated\\n    paymentMethodId\\n    createdThrough\\n    notes\\n    createdSupportUserId\\n    notifySent\\n    producerId\\n    producerOrderId\\n    clientCompanyName\\n    withdrawId\\n    additionalPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    basePrice {\\n      amount\\n      currency\\n      __typename\\n    }\\n    dropOffPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    payout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    pickUpPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    returnPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete delivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"UpdateDeliveries\",\r\n    \"variables\": {\r\n        \"items\": [\r\n            {\r\n                \"id\": {{id}},\r\n                \"status\": 6\r\n            }\r\n        ]\r\n    },\r\n    \"query\": \"mutation UpdateDeliveries($items: [UpdateDeliveryArgs!]!) {\\n  updateDeliveries(items: $items) {\\n    id\\n    adminNotes {\\n      id\\n      comment\\n      createdAt\\n      type\\n      updatedAt\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      __typename\\n    }\\n    assignedAt\\n    branchBusinessCompanyId\\n    businessCompany {\\n      id\\n      avatarUrl\\n      businessName\\n      companyName\\n      contactName\\n      contactPhoneNumber\\n      isTechAct\\n      maxReturnCount\\n      minDeliveriesInGroupCount\\n      polygonId\\n      polygonIds\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      userId\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      __typename\\n    }\\n    businessCompanyId\\n    canceledAt\\n    completedAt\\n    courier {\\n      id\\n      firstName\\n      lastName\\n      name\\n      status\\n      taxStatus\\n      user {\\n        id\\n        avatarUrl\\n        courierStatus\\n        firstName\\n        isAdmin\\n        isBusinessCompany\\n        isCourier\\n        isSender\\n        lastName\\n        name\\n        phoneNumber\\n        __typename\\n      }\\n      userId\\n      vehicle\\n      statistics {\\n        completedCount\\n        __typename\\n      }\\n      __typename\\n    }\\n    courierId\\n    createdAt\\n    distance\\n    dropOffPointId\\n    externalId\\n    groupId\\n    isExcluded\\n    isReturnable\\n    package {\\n      id\\n      barcodeId\\n      branchBusinessCompanyId\\n      businessCompanyId\\n      conditions\\n      customerUniqueId\\n      sender {\\n        id\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      senderId\\n      size\\n      __typename\\n    }\\n    pickUpPointId\\n    pickedUpAt\\n    priority\\n    returnedAt\\n    routeId\\n    returnPointId\\n    startedAt\\n    status\\n    doneAt\\n    deliveryProviderId\\n    deliveryProviderCourierId\\n    originalDropoffDate\\n    isNow\\n    vat\\n    paymentStatus\\n    isPaidToCourier\\n    courierTaxRateId\\n    isSharedLocation\\n    emailNotification\\n    deliveryNumber\\n    insuranceId\\n    realAssignmentDate\\n    realStartDate\\n    realCompletedDate\\n    dateStatusUpdated\\n    paymentMethodId\\n    createdThrough\\n    notes\\n    createdSupportUserId\\n    notifySent\\n    producerId\\n    producerOrderId\\n    clientCompanyName\\n    withdrawId\\n    additionalPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    basePrice {\\n      amount\\n      currency\\n      __typename\\n    }\\n    dropOffPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    payout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    pickUpPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    returnPoint {\\n      id\\n      contactName\\n      contactPhoneNumber\\n      deliveryId\\n      duration\\n      instructions\\n      isValidationPassed\\n      order\\n      photoproofUploads {\\n        id\\n        filename\\n        type\\n        url\\n        user {\\n          id\\n          avatarUrl\\n          courierStatus\\n          firstName\\n          isAdmin\\n          isBusinessCompany\\n          isCourier\\n          isSender\\n          lastName\\n          name\\n          phoneNumber\\n          __typename\\n        }\\n        userId\\n        __typename\\n      }\\n      recipientName\\n      status\\n      type\\n      address {\\n        addressLine1\\n        addressLine2\\n        country\\n        state\\n        city\\n        street\\n        number\\n        zip\\n        notes\\n        __typename\\n      }\\n      end\\n      issue {\\n        comment\\n        type\\n        __typename\\n      }\\n      location {\\n        coordinates\\n        __typename\\n      }\\n      start\\n      validationMethods {\\n        type\\n        validationData\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sender charge line",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"CreateManualSenderChargeLine\",\r\n    \"variables\": {\r\n        \"accountId\": {{business_company}},\r\n        \"amount\": {{$randomInt}},\r\n        \"date\": \"Thu Feb 04 2021\",\r\n        \"serviceType\": \"PREMIUM\",\r\n        \"description\": \"tomer\"\r\n    },\r\n    \"query\": \"mutation CreateManualSenderChargeLine($accountId: Int!, $amount: Float!, $date: String!, $serviceType: DeliveryServiceType!, $description: String) {\\n  createManualSenderChargeLine(accountId: $accountId, amount: $amount, date: $date, serviceType: $serviceType, description: $description) {\\n    id\\n    businessCompanyId\\n    senderId\\n    amount\\n    serviceType\\n    chargeLineType\\n    description\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sender charge line",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"groupUUID\", pm.request.json().groupUUID);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"const moment = require('moment');\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token 3fbb01fdd0eedb33f86a96c9585321a1a794a575"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationName\": \"CreateManualSenderChargeLine\",\r\n    \"variables\": {\r\n        \"accountId\": {{business_company}},\r\n        \"amount\": {{$randomInt}},\r\n        \"date\": \"Thu Feb 04 2021\",\r\n        \"serviceType\": \"DISTRIBUTION\",\r\n        \"description\": \"tomer\"\r\n    },\r\n    \"query\": \"mutation CreateManualSenderChargeLine($accountId: Int!, $amount: Float!, $date: String!, $serviceType: DeliveryServiceType!, $description: String) {\\n  createManualSenderChargeLine(accountId: $accountId, amount: $amount, date: $date, serviceType: $serviceType, description: $description) {\\n    id\\n    businessCompanyId\\n    senderId\\n    amount\\n    serviceType\\n    chargeLineType\\n    description\\n    __typename\\n  }\\n}\\n\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
+					"protocol": "https",
+					"host": [
+						"api-stg",
+						"getpackage-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
