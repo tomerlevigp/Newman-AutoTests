@@ -348,7 +348,7 @@
 						"exec": [
 							"\r",
 							"const moment = require('moment');\r",
-							"pm.globals.set(\"timestamp\", moment().add(3, 'days').format(\"YYYY-MM-DD\"));\r",
+							"pm.globals.set(\"timestamp\", moment().add(4, 'days').format(\"YYYY-MM-DD\"));\r",
 							""
 						],
 						"type": "text/javascript"
