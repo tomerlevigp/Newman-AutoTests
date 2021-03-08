@@ -208,7 +208,7 @@
 					{
 						"key": "Cookie",
 						"type": "text",
-						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+						"value": "gtpkg=s%3AQubsI7IF10VOs_uAom8a3zeAVA18QYaH.3HUJlOcno%2Bayt6qBG2Ms4IXQGSR4mguqZDE4%2FlxH9kc"
 					}
 				],
 				"body": {
@@ -319,6 +319,16 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"EncPhoneNumber\", _.random(10000000, 99999999))\r",
 							""
 						],
 						"type": "text/javascript"
@@ -448,6 +458,16 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"EncPhoneNumber\", _.random(10000000, 99999999))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -466,7 +486,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 0,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"05{{EncPhoneNumber}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 0,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -575,7 +595,7 @@
 					{
 						"key": "Cookie",
 						"type": "text",
-						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+						"value": "gtpkg=s%3AQubsI7IF10VOs_uAom8a3zeAVA18QYaH.3HUJlOcno%2Bayt6qBG2Ms4IXQGSR4mguqZDE4%2FlxH9kc"
 					}
 				],
 				"body": {
@@ -662,7 +682,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 12\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
+					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 20\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
 				},
 				"url": {
 					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
@@ -746,6 +766,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"var phoneNumber = pm.globals.get(\"EncPhoneNumber\");\r",
+							"pm.globals.set(\"EncPhoneNumber\", (phoneNumber+1));\r",
+							"\r",
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
@@ -816,6 +839,16 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"EncPhoneNumber\", _.random(10000000, 99999999))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -834,7 +867,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 1,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"05{{EncPhoneNumber}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 1,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -943,7 +976,7 @@
 					{
 						"key": "Cookie",
 						"type": "text",
-						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+						"value": "gtpkg=s%3AQubsI7IF10VOs_uAom8a3zeAVA18QYaH.3HUJlOcno%2Bayt6qBG2Ms4IXQGSR4mguqZDE4%2FlxH9kc"
 					}
 				],
 				"body": {
@@ -1030,7 +1063,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 12\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
+					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 20\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
 				},
 				"url": {
 					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
@@ -1183,6 +1216,16 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"EncPhoneNumber\", _.random(10000000, 99999999))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -1201,7 +1244,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"0522{{$randomInt}}{{$randomInt}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 2,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false,\r\n    \"account_number\": \"2342\",\r\n    \"bank_id\": 1,\r\n    \"branch_number\": \"934\",\r\n    \"full_name\": \"Tomer levi gptest\"\r\n\r\n\r\n}",
+					"raw": "\t{\r\n    \"city\": \"תל אביב\",\r\n\t\"email\": \"tomer+{{$randomInt}}{{$randomInt}}@gmail.com\",\r\n\t\"first_name\": \"Tomer\",\r\n\t\"last_name\": \"levi gptest\",\r\n\t\"national_id\": \"{{NationalId}}\",\r\n\t\"phone_number\": \"05{{EncPhoneNumber}}\",\r\n\t\"tax_id\": \"{{NationalId}}\",\r\n\t\"tax_method\": 2,\r\n\t\"vehicle_license_number\": \"11111111\",\r\n\t\"vehicle_type_id\": 5,\r\n\t\"with_payment\": false,\r\n    \"account_number\": \"2342\",\r\n    \"bank_id\": 1,\r\n    \"branch_number\": \"934\",\r\n    \"full_name\": \"Tomer levi gptest\"\r\n\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1310,7 +1353,7 @@
 					{
 						"key": "Cookie",
 						"type": "text",
-						"value": "gtpkg=s%3AiJKanmRcxXfSR2tQBv3r9z-Ofzoy67Vz.U7VzfX55HazFn%2BiuCCuSAgIDSWPgySUAEPHUOBqMxwY"
+						"value": "gtpkg=s%3AQubsI7IF10VOs_uAom8a3zeAVA18QYaH.3HUJlOcno%2Bayt6qBG2Ms4IXQGSR4mguqZDE4%2FlxH9kc"
 					}
 				],
 				"body": {
@@ -1397,7 +1440,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 12\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
+					"raw": "{\r\n    \"operationName\": \"CreateManualChargeLine\",\r\n    \"variables\": {\r\n        \"time\": \"2020-12-01T01:08:09.275+02:00\",\r\n        \"courierId\": {{CourierId}},\r\n        \"manualType\": 0,\r\n        \"description\": \"sdf\",\r\n        \"price\": 20\r\n    },\r\n    \"query\": \"mutation CreateManualChargeLine($time: DateTime, $courierId: Int, $manualType: Int, $description: String, $price: Float) {\\n  createManualChargeLine(time: $time, courierId: $courierId, manualType: $manualType, description: $description, price: $price) {\\n    id\\n    courierId\\n    routeId\\n    courierPayout {\\n      amount\\n      currency\\n      __typename\\n    }\\n    time\\n    description\\n    type\\n    courierTaxId\\n    senderId\\n    senderName\\n    status\\n    __typename\\n  }\\n}\\n\"\r\n}"
 				},
 				"url": {
 					"raw": "https://api-stg.getpackage-dev.com/v1/graphql/",
