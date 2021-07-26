@@ -1,55 +1,58 @@
 {
 	"info": {
-		"_postman_id": "f5d31668-8ff7-44cc-a3a3-769379087e86",
-		"name": "300 Deliveries Script",
+		"_postman_id": "1758388d-b3cf-4cb0-858f-1d8da9afd903",
+		"name": "RoutesCreationScript",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Create Distribution",
+			"name": "Create SHR First",
 			"event": [
 				{
-					"listen": "prerequest",
+					"listen": "test",
 					"script": {
 						"exec": [
-							"\r",
-							"const moment = require('moment');\r",
-							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
-							"\r",
-							"\r",
-							"const latitude = parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`);\r",
-							"const longitude = parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`);\r",
-							"pm.environment.set(\"random_latitude\", latitude);\r",
-							"pm.environment.set(\"random_longitude\", longitude);"
+							"//Status check:\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"//Starts the loop count, (0-149)\r",
+							"pm.environment.set(\"LoopCount\", 0);\r",
+							"postman.setNextRequest(\"Create Distribution\")"
 						],
 						"type": "text/javascript"
 					}
 				},
 				{
-					"listen": "test",
+					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"try {\r",
-							"    // save userId from json response as an environment variable\r",
-							"    pm.environment.set(\"id\", pm.response.json().id);\r",
-							"} catch(e) {\r",
-							"    // print the exception to the console\r",
-							"    console.log(e);\r",
+							"//Sets the deliveries creation time to tomorrow (Or next available day)\r",
+							"const moment = require('moment');\r",
+							"var day=moment().format(\"dddd\");\r",
+							"console.log(day);\r",
+							"//If next available day is Friday, set time range to 10:00-13:00, else either \"10:30-16:00\" or \"14:00-18:00\"\r",
+							"var timeRangeArr = [\"10:30-16:00\",\"14:00-18:00\",\"10:00-13:00\"];\r",
+							"if(day==\"Thursday\")\r",
+							"{\r",
+							"   pm.globals.set(\"timestamp\", moment().add(3, 'days').format(\"YYYY-MM-DD\"));\r",
+							"   pm.environment.set(\"timeRange\", timeRangeArr[Math.floor(Math.random() * 2)])\r",
 							"}\r",
-							"\r",
-							"\r",
-							"pm.test(\"save groupUUID\", function () {\r",
-							"    var req = JSON.parse(pm.request.body.raw);\r",
-							"    pm.environment.set(\"groupUUID\", req.groupUUID);\r",
+							"else if (day==\"Friday\")\r",
+							"{\r",
+							"  pm.globals.set(\"timestamp\", moment().add(2, 'days').format(\"YYYY-MM-DD\"));\r",
+							"  pm.environment.set(\"timeRange\", timeRangeArr[2])\r",
 							"}\r",
-							"\r",
-							"\r",
-							")\r",
-							""
+							"else\r",
+							"{\r",
+							"pm.globals.set(\"timestamp\", moment().add(1, 'days').format(\"YYYY-MM-DD\"));\r",
+							"pm.environment.set(\"timeRange\", timeRangeArr[Math.floor(Math.random() * 2)])\r",
+							"}\r",
+							"//Sets a number of random coordinates \r",
+							"for(var i=0;i<2;i++){\r",
+							"    pm.environment.set((\"random_latitude\"+i), parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -66,7 +69,150 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"branchClientId\": \"169\",   \r\n\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"\r\n          \r\n        },  \r\n        \"instructions\": \"test!!!!!!tomer\",\r\n        \"contactName\": \"תומר\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },    \r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude}} ,\r\n            \"latitude\": {{random_latitude}}                    \r\n                                  \r\n        },\r\n        \"instructions\": \"test!!!!!!!!!!!!!\",\r\n        \"contactName\": \"טט\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 0\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": false,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n\r\n    \r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"raw": "{\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude0}},\r\n            \"latitude\": {{random_latitude0}}\r\n        },\r\n        \"note\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Pickup\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude1}},\r\n            \"latitude\": {{random_latitude1}}\r\n        },\r\n        \"note\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Drop-Off\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": true,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"timeRange\": \"{{timeRange}}\",\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/sdd/deliveries",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"sdd",
+						"deliveries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create SHR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Status check:\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"//Update loop count\r",
+							"pm.environment.set(\"LoopCount\", pm.environment.get(\"LoopCount\")+1);\r",
+							"console.log(\"Starting loop \"+pm.environment.get(\"LoopCount\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//If next available day is Friday, keep time range as 10:00-13:00, else change it to either \"10:30-16:00\" or \"14:00-18:00\"\r",
+							"if(pm.environment.get(\"timeRange\")!=\"10:00-13:00\"){\r",
+							"var timeRangeArr = [\"10:30-16:00\",\"14:00-18:00\",\"10:00-13:00\"];\r",
+							"pm.environment.set(\"timeRange\", timeRangeArr[Math.floor(Math.random() * 2)])\r",
+							"}\r",
+							"//Sets a number of random coordinates \r",
+							"for(var i=0;i<2;i++){\r",
+							"    pm.environment.set((\"random_latitude\"+i), parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude0}},\r\n            \"latitude\": {{random_latitude0}}\r\n        },\r\n        \"note\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Pickup\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude1}},\r\n            \"latitude\": {{random_latitude1}}\r\n        },\r\n        \"note\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Drop-Off\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 2\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": true,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"timeRange\": \"{{timeRange}}\",\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/sdd/deliveries",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"sdd",
+						"deliveries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Distribution",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Sets a number of random coordinates\r",
+							"pm.environment.set(\"random_latitude0\", parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"pm.environment.set(\"random_longitude0\", parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"//If in first loop, updates groupUUID, if not, keeps it\r",
+							"if(pm.environment.get(\"LoopCount\")==0){\r",
+							"pm.environment.set(\"groupUUID\", Math.floor(Math.random() * 100000000))\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"postman.setNextRequest(\"Create Express\"+Math.floor(Math.random() * 3))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n    \"pickUpPoint\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"\"\r\n        },\r\n        \"instructions\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Pickup\",\r\n        \"contactPhoneNumber\": \"052-2216199\"\r\n    },\r\n    \"dropOffPoint\": {\r\n        \"address\": {\r\n            \"longitude\": {{random_longitude0}},\r\n            \"latitude\": {{random_latitude0}}\r\n        },\r\n        \"instructions\": \"AutoRoute\",\r\n        \"contactName\": \"Auto Drop-Off\",\r\n        \"contactPhoneNumber\": \"0522216199\",\r\n        \"validationMethodType\": 0\r\n    },\r\n    \"date\": \"{{timestamp}}\",\r\n    \"isReturnable\": true,\r\n    \"isDummy\": false,\r\n    \"notes\": \"test\",\r\n    \"groupUUID\": \"{{groupUUID}}\",\r\n    \"package\": {\r\n        \"packageId\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n        \"size\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,6 +230,305 @@
 						"businessCompanies",
 						"deliveries",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Express0",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Sets a number of random coordinates \r",
+							"for(var i=0;i<2;i++){\r",
+							"    pm.environment.set((\"random_latitude\"+i), parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"}\r",
+							"//Sets express hour between 09:00 and 20:00\r",
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"if(pm.environment.get(\"LoopCount\")==150){\r",
+							"    postman.setNextRequest(\"Trigger\")\r",
+							"}else{\r",
+							"     postman.setNextRequest(\"Create SHR\")\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "APIKEY 2bb7f578-ca67-4355-af68-a19c7ec93b86",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"{{timestamp}}T{{expressHour}}:00:00.000Z\",\n    \"deliveries\": [\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude0}},\n                    \"latitude\": {{random_latitude0}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude1}},\n                    \"latitude\": {{random_latitude1}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        }\n    ],\n    \"stopPointsOrder\": [\n        0,\n        0\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/express",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"express"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Express1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Sets a number of random coordinates\r",
+							"for(var i=0;i<4;i++){\r",
+							"    pm.environment.set((\"random_latitude\"+i), parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"}\r",
+							"//Sets express hour between 09:00 and 20:00\r",
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"if(pm.environment.get(\"LoopCount\")==150){\r",
+							"    postman.setNextRequest(\"Trigger\")\r",
+							"}else{\r",
+							"     postman.setNextRequest(\"Create SHR\")\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "APIKEY 2bb7f578-ca67-4355-af68-a19c7ec93b86",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"{{timestamp}}T{{expressHour}}:00:00.000Z\",\n    \"deliveries\": [\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude0}},\n                    \"latitude\": {{random_latitude0}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude1}},\n                    \"latitude\": {{random_latitude1}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        },\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude2}},\n                    \"latitude\": {{random_latitude2}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude3}},\n                    \"latitude\": {{random_latitude3}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        }\n    ],\n    \"stopPointsOrder\": [\n        0,\n        0,\n        1,\n        1\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/express",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"express"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Express2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Sets a number of random coordinates\r",
+							"for(var i=0;i<6;i++){\r",
+							"    pm.environment.set((\"random_latitude\"+i), parseFloat(`31.99${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
+							"}\r",
+							"//Sets express hour between 09:00 and 20:00\r",
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"try {\r",
+							"    // save userId from json response as an environment variable\r",
+							"    pm.environment.set(\"id\", pm.response.json().id);\r",
+							"} catch(e) {\r",
+							"    // print the exception to the console\r",
+							"    console.log(e);\r",
+							"}\r",
+							"if(pm.environment.get(\"LoopCount\")==150){\r",
+							"    postman.setNextRequest(\"Trigger\")\r",
+							"}else{\r",
+							"     postman.setNextRequest(\"Create SHR\")\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{Authorization}}"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "APIKEY 2bb7f578-ca67-4355-af68-a19c7ec93b86",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"{{timestamp}}T{{expressHour}}:00:00.000Z\",\n    \"deliveries\": [\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude0}},\n                    \"latitude\": {{random_latitude0}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude1}},\n                    \"latitude\": {{random_latitude1}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        },\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude2}},\n                    \"latitude\": {{random_latitude2}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude3}},\n                    \"latitude\": {{random_latitude3}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        },\n        {\n            \"pickUpPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude4}},\n                    \"latitude\": {{random_latitude4}}\n                },\n                \"contactName\": \"Auto Pickup\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"dropOffPoint\": {\n                \"address\": {\n                    \"longitude\": {{random_longitude5}},\n                    \"latitude\": {{random_latitude5}}\n                },\n                \"contactName\": \"Auto Drop-Off\",\n                \"contactPhoneNumber\": \"0586776877\",\n                \"validationMethodType\": 1,\n                \"instructions\": \"AutoRoute\"\n            },\n            \"isReturnable\": true,\n            \"package\": {\n                \"packageId\": \"{{$randomInt}}\",\n                \"size\": 1\n            }\n        }\n    ],\n    \"stopPointsOrder\": [\n        0,\n        0,\n        1,\n        1,\n        2,\n        2\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/express",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"express"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Status check:\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"branchClientId\": \"169\",\r\n    \"date\": \"{{timestamp}}\",\r\n    \"groupUUID\": \"{{groupUUID}}\",\r\n    \"pickUpTimeRange\": \"10:00-11:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/deliveries/businessCompanies/groups/trigger",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"deliveries",
+						"businessCompanies",
+						"groups",
+						"trigger"
 					]
 				}
 			},
