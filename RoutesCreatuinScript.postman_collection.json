@@ -248,7 +248,7 @@
 							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
 							"}\r",
 							"//Sets express hour between 09:00 and 20:00\r",
-							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 11)+10)"
 						],
 						"type": "text/javascript"
 					}
@@ -328,7 +328,7 @@
 							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
 							"}\r",
 							"//Sets express hour between 09:00 and 20:00\r",
-							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 11)+10)"
 						],
 						"type": "text/javascript"
 					}
@@ -408,7 +408,7 @@
 							"    pm.environment.set((\"random_longitude\"+i), parseFloat(`34.76${pm.variables.replaceIn('{{$randomInt}}')}`));\r",
 							"}\r",
 							"//Sets express hour between 09:00 and 20:00\r",
-							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 12)+10)"
+							"pm.environment.set(\"expressHour\", Math.floor(Math.random() * 11)+10)"
 						],
 						"type": "text/javascript"
 					}
